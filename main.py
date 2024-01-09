@@ -12,7 +12,7 @@ def send_email(email):
     email_host = 'smtp.gmail.com'
     email_host_user = 'seyedparsaarabi8824@gmail.com'
     email_port_ssl = 465
-    email_host_password = 'qkmhmcrfhqpwzger'
+    email_host_password = '****************'
     code = str(random.randint(100000, 999999))
     with smtplib.SMTP_SSL(email_host, email_port_ssl) as server:
         server.login(email_host_user, email_host_password)
