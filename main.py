@@ -92,7 +92,7 @@ def new_file(for_folder):
                 resp = make_response(redirect("/login"))
                 resp.delete_cookie("cookie")
                 return resp
-            return render_template("new_file.html", name=name['username'], for_folder=for_folder)
+            return render_template("new-file.html", name=name['username'], for_folder=for_folder)
 
 
         else:
