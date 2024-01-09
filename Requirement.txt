@@ -1,0 +1,7 @@
+pip3 insatall flask
+pip3 install Flask-Limiter
+pip3 install Flask-SQLAlchemy
+pip3 install PyJWT
+pip3 install datetime
+pip3 install jdatetime
+pip3 install mimetype
