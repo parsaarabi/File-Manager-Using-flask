@@ -1,9 +1,6 @@
 {%extends 'base.html'%}
 {%block content%}
 <link rel="stylesheet" href="/static/css/new_file.css" >
-
-<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
-<!--<div class="col-md-4 col-10 col-lg-4 col-sm-8 ">-->
 <div class="center">
     <div class="box">
         <form action="/register_file" method="post" enctype="multipart/form-data">
@@ -29,7 +26,6 @@
     <progress id="progressBar" value="0" max="100"></progress>
     <p id="progressText">0%</p>
 
-<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
 <script>
         var progressBar = document.getElementById('progressBar');
         var progressText = document.getElementById('progressText');
