@@ -1,0 +1,76 @@
+{%extends 'base.html'%}
+{%block content%}
+<link rel="stylesheet" href="/static/css/edit_file.css">
+
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+<!--<div class="col-md-4 col-10 col-lg-4 col-sm-8 ">-->
+<div class="center">
+    <div class="box">
+        <form action="/accept_edit_file" method="POST" enctype="multipart/form-data">
+            <input type="hidden" value="{{id}}" name="id">
+            <h2>ویرایش فایل</h2><hr>
+            <h6 align="right">از گذاشتن عدد درون "(" و ")" اجتناب کنید</h6>
+            <div class="inputBox">
+                <input type="text" name="name" required value="{{name_}}">
+                <span>نام</span>
+                <i class="i-tag"></i>
+            </div>
+            {% if type == 'folder' %}
+
+            {% if btn_status == None %}
+                <div class="form-check form-switch">
+                    <br>
+                    <input class="form-check-input" name="delete_check" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">حذف فایل های پوشه هنگام حذف</label>
+                    <br>
+                </div>
+            {% endif %}
+            {% if btn_status != None %}
+                <div class="form-check form-switch">
+                    <br>
+                    <input class="form-check-input" name="delete_check" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">حذف فایل های پوشه هنگام حذف</label>
+                    <br>
+                </div>
+            {% endif %}
+            {% endif %}
+
+
+
+            <div class="inputBox">
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="for_folder">
+                    <option value="index">index</option>
+                    {% for folder_list in files %}
+                    {% if folder_list.type == 'folder' %}
+                    {% if folder_list.for_user == name %}
+                    {% if type != 'folder' %}
+                    {% if for_folder == folder_list.name %}
+                    <option value="{{folder_list.name}}" selected>{{folder_list.name}}</option>
+                    {% endif %}
+                    {% if for_folder != folder_list.name %}
+                    <option value="{{folder_list.name}}">{{folder_list.name}}</option>
+                    {% endif %}
+                    {% endif %}
+                    {% if type == 'folder' %}
+                    {% if for_folder == folder_list.name %}
+                    <option value="{{folder_list.name}}" selected>{{folder_list.name}}</option>
+                    {% endif %}
+                    {% if name_ != folder_list.name %}
+                    {% if for_folder != folder_list.name %}
+                    <option value="{{folder_list.name}}">{{folder_list.name}}</option>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <center>
+                <input type="submit" value="تایید">
+            </center>
+        </form>
+    </div>
+</div>
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+{% endblock %}

@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+{%block content%}
+<link rel="stylesheet" href="/static/css/new_file.css" >
+
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+<!--<div class="col-md-4 col-10 col-lg-4 col-sm-8 ">-->
+<div class="center">
+    <div class="box">
+        <form action="/register_file" method="post" enctype="multipart/form-data">
+            <h2>فایل جدید</h2><hr>
+
+            <input type="hidden" value="{{for_folder}}" name="for_folder">
+
+            <div class="file-input-container">
+                <label for="custom-file-input" class="custom-label">
+                    <span class="icon">📁</span> فایلی پرتاب کنید یا اینجا کلیک کنید
+                </label>
+                <input type="file" id="custom-file-input" class="hidden-input" name="file" required>
+                <p class="file-name" id="file-name">هیچ فایلی انتخاب نشده</p>
+            </div>
+            <center>
+
+                <input type="submit" value="ثبت">
+            </center>
+        </form>
+    </div>
+</div>
+<h2>Download Progress:</h2>
+    <progress id="progressBar" value="0" max="100"></progress>
+    <p id="progressText">0%</p>
+
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+<script>
+        var progressBar = document.getElementById('progressBar');
+        var progressText = document.getElementById('progressText');
+
+            var source = new EventSource('/download/example.mp4');
+        source.onmessage = function (event) {
+            if (event.data.startsWith('progress:')) {
+                var progress = parseFloat(event.data.substring('progress:'.length));
+                progressBar.value = progress;
+                progressText.innerText = progress.toFixed(2) + '%';
+            }
+        };
+    </script>
+<script src="/static/js/new_file.js"></script>
+
+{% endblock %}

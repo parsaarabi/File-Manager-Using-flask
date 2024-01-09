@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<link rel="stylesheet" href="/static/css/email_accept.css">
+<div class="center">
+    <div class="box">
+        <form action="/email_checker" method="post">
+            <h2 id="timer">تایید ایمیل</h2>
+            <div class="inputBox">
+                <input type="number" name="code" required>
+                <span>کد تایید ایمیل</span>
+                <i class="i-tag"></i>
+            </div>
+
+            <br>
+            <center>
+                <input type="submit" value="تایید">
+            </center>
+        </form>
+    </div>
+</div>
+<script src="/static/js/timer_for_refresh.js"></script>
+{% endblock %}

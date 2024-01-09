@@ -1,0 +1,285 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<div id="overlay" class="overlay">
+  <img src="/static/icons/box-seam.svg" alt="Icon" width="200px" height="200px"/>
+</div>
+{% if not name %}
+<div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+
+</div>
+
+
+<div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+    <div class="index-not-cookie">
+        <h1>رایگان ذخیره کن</h1>
+        <a href="/login" class="btn btn-domanate">ورود</a>
+        <a href="/register" class="btn btn-domanate">ثبت نام</a>
+    </div>
+
+</div>
+
+
+<div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" >
+
+</div>
+{% endif %}
+
+
+{% if name %}
+
+<div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1" >
+
+</div>
+
+
+<div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+    <div id="container">
+        <!--        <h4 class="inline-class" align="right">پوشه : </h4>-->
+        <!--        <h4 align="right" class="">{{page}} </h4>-->
+        <!--        <br><br><br>-->
+        <div id="myBar">
+
+            <!--            <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                  data-bs-content="خانه">-->
+            <button id="myButton" class="nav-btn-center">
+                <img src="/static/icons/caret-up-fill.svg" width="40px" height="50px" id="btn-img">
+            </button>
+            <!--            </span>-->
+
+            <!--                        <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                              data-bs-content="خانه">-->
+            <a  class="btn btn-dark nav-btn" href="/"><img src="/static/icons/house.svg" width="40px" height="50px"></a>
+            <!--                        </span>-->
+            <!--                        <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                              data-bs-content="خانه">-->
+            <a class="btn btn-dark nav-btn"><img src="/static/icons/gear.svg" width="40px" height="50px"></a>
+            <!--                        </span>-->
+            <!--                        <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                              data-bs-content="خانه">-->
+            <a class="btn btn-dark nav-btn" href="{{url_for('new_folder', for_folder=page)}}"><img src="/static/icons/folder-plus.svg" width="40px" height="50px"></a>
+            <!--                        </span>-->
+            <!--            <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                  data-bs-content="خانه">-->
+            <a href="{{url_for('new_file', for_folder=page)}}" class="btn btn-dark nav-btn"><img src="/static/icons/upload.svg" width="40px" height="50px"></a>
+            <!--            </span>-->
+            <!--            <span class="" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"-->
+            <!--                  data-bs-content="خانه">-->
+            <a class="btn btn-dark nav-btn" href="/logout"><img src="/static/icons/box-arrow-left.svg" width="40px" height="50px"></a>
+            <!--            </span>-->
+        </div>
+
+        <div class="totally-file">
+
+            {% if page == 'index' %}
+
+            {% endif %}
+            {% for i in path %}
+            {% if i == 'index' %}
+
+            {% endif %}
+            {% if i != 'index' %}
+            <a href="{{url_for('in_folder', folder=i)}}" class="inline-class path">{{i}}/</a>
+
+            {% endif %}
+            {% endfor %}
+            {% if page != 'index' %}
+            <a href="{{url_for('in_folder', folder=back_btn)}}" class="back-btn"><ion-icon name="arrow-forward"></ion-icon></a>
+            {% endif %}
+            <hr>
+            {% for file in files %}
+            {% if file.for_user == name %}
+            {% if file.for_folder == page %}
+            {% if file.type == 'folder' %}
+            <div class="file">
+                <a href="{{url_for('in_folder', folder=file.name)}}">
+                    <img src="/static/icons/folder.svg" width="40px" height="40px" class="file-icon">
+                    <p class="description">{{file.name}}</p>
+                    <br><p class="file-date">{{file.time}}</p>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="Disabled popover">
+                        <a href="#"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="حذف">
+                        <a href="{{url_for('delete', post_id=file.id)}}" class="decription-btn"><img src="/static/icons/trash.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ویرایش">
+                        <a href="{{url_for('edit_file', id=file.id)}}" class="decription-btn"><img src="/static/icons/eraser-fill.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            {% if file.type == 'audio' %}
+            <div class="file">
+                <a download="{{file.url}}">
+                    <img src="/static/icons/file-music.svg" width="40px" height="40px" class="file-icon">
+                    <p class="description">{{file.name}}</p>
+                    <audio id="{{file.id}}{{file.type}}"  preload="auto">
+                        <source src="/{{file.url}}" type="audio/mpeg">
+                    </audio>
+                    <button onclick="play_pause('{{file.id}}{{file.type}}', '{{file.id}}', '{{file.type}}{{file.name}}', '{{file.time}}')" id="{{file.id}}" class="stop-and-start-btn"><img src="/static/icons/play-fill.svg" width="20px" height="20px" class="file-icon"></button>
+                    <br><p class="file-date" id="{{file.type}}{{file.name}}">{{file.time}}</p>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="Disabled popover">
+                        <a href="#"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="حذف">
+                        <a href="{{url_for('delete', post_id=file.id)}}" class="decription-btn"><img src="/static/icons/trash.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ویرایش">
+                        <a href="{{url_for('edit_file', id=file.id)}}" class="decription-btn"><img src="/static/icons/eraser-fill.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ذخیره">
+                        <a class="decription-btn" href="/{{file.url}}"><img src="/static/icons/download.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="کپی لینک دانلود">
+                        <a class="decription-btn" onclick="copy('/{{file.url}}')"><img src="/static/icons/copy.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+
+
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            {% if file.type == 'image' %}
+            <div class="file">
+                <a download="/{{file.url}}">
+                    <img src="/static/icons/file-image.svg" width="40px" height="40px" class="file-icon">
+                    <p class="description">
+                        {{file.name}}
+                    </p>
+                    <br><p class="file-date">{{file.time}}</p>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="Disabled popover">
+                        <a href="#"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="حذف">
+                        <a href="{{url_for('delete', post_id=file.id)}}" class="decription-btn"><img src="/static/icons/trash.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ویرایش">
+                        <a href="{{url_for('edit_file', id=file.id)}}" class="decription-btn"><img src="/static/icons/eraser-fill.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ذخیره">
+                        <a class="decription-btn" href="/{{file.url}}"><img src="/static/icons/download.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="کپی لینک دانلود">
+                        <a class="decription-btn" onclick="copy('/{{file.url}}')"><img src="/static/icons/copy.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            {% if file.type == 'video' %}
+            <div class="file">
+                <a download="{{file.url}}">
+                    <img src="/static/icons/file-play.svg" width="40px" height="40px" class="file-icon">
+                    <p class="description">{{file.name}}</p>
+                    <br><p class="file-date">{{file.time}}</p>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="Disabled popover">
+                        <a href="#"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="حذف">
+                        <a href="{{url_for('delete', post_id=file.id)}}" class="decription-btn"><img src="/static/icons/trash.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ویرایش">
+                        <a href="{{url_for('edit_file', id=file.id)}}" class="decription-btn"><img src="/static/icons/eraser-fill.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ذخیره">
+                        <a class="decription-btn" href="/{{file.url}}"><img src="/static/icons/download.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="کپی لینک دانلود">
+                        <a class="decription-btn" onclick="copy('/{{file.url}}')"><img src="/static/icons/copy.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            {% if file.type != 'audio' and file.type != 'video' and file.type != 'image' and file.type != 'folder' %}
+            <div class="file">
+                <a download="{{file.url}}">
+                    <img src="/static/icons/file-earmark.svg" width="40px" height="40px" class="file-icon">
+                    <p class="description">{{file.name}}</p>
+                    <br><p class="file-date">{{file.time}}</p>
+
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="Disabled popover">
+                        <a href="#"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="حذف">
+                        <a href="{{url_for('delete', post_id=file.id)}}" class="decription-btn"><img src="/static/icons/trash.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ویرایش">
+                        <a href="{{url_for('edit_file', id=file.id)}}" class="decription-btn"><img src="/static/icons/eraser-fill.svg" width="16px" height="16px" class="file-icon"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="ذخیره">
+                        <a class="decription-btn" href="/{{file.url}}"><img src="/static/icons/download.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                          data-bs-content="کپی لینک دانلود">
+                        <a class="decription-btn" onclick="copy('/{{file.url}}')"><img src="/static/icons/copy.svg"  class="file-icon" height="16px" width="16px"></a>
+                    </span>
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+<div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1">
+
+</div>
+
+<script>
+
+    var btn_img = document.getElementById("btn-img");
+    var button = document.getElementById("myButton");
+    var bar = document.getElementById("myBar");
+
+    button.addEventListener("click", function() {
+        if (bar.classList.contains("show")) {
+            // button.classList.remove("btn-dark")
+            // button.classList.add("btn-light")
+            btn_img.src="/static/icons/caret-up-fill.svg";
+            bar.classList.remove("show");
+        } else {
+            // button.classList.remove("btn-light")
+            // button.classList.add("btn-dark")
+            btn_img.src="/static/icons/caret-down-fill.svg";
+            bar.classList.add("show");
+        }
+    });
+
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%block content%}
+<link rel="stylesheet" href="/static/css/login.css">
+
+<!--<div class="col-md-4 col-0 col-lg-4 col-sm-2"></div>-->
+<!--<div class="col-md-4 col-12 col-lg-4 col-sm-8 ">-->
+<div class="center">
+    <div class="box">
+        <form action="/login" method="post">
+            <h2>ورود</h2>
+            <div class="inputBox">
+                <input type="text" name="username" required>
+                <span>نام کاربری</span>
+                <i class="i-tag"></i>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="password" required>
+                <span>رمز</span>
+                <i class="i-tag"></i>
+            </div>
+            <div class="links">
+                <a href="/register">ثبت نام</a>
+            </div><br>
+            <center>
+                <input type="submit" value="ورود">
+            </center>
+        </form>
+    </div>
+</div>
+
+
+<!--<div class="col-md-4 col-0 col-lg-4 col-sm-2"></div>-->
+
+
+
+{% endblock %}

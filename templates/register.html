@@ -1,0 +1,40 @@
+{%extends 'base.html'%}
+{%block content%}
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+<!--<div class="col-md-4 col-10 col-lg-4 col-sm-8 ">-->
+
+<link rel="stylesheet" href="/static/css/register.css">
+<div class="center">
+    <div class="box">
+        <form action="/register" method="POST">
+            <h2>ثبت نام</h2>
+            <div class="inputBox">
+                <input type="number" name="username" required>
+                <span>نام کاربری</span>
+                <i class="i-tag"></i>
+            </div>
+            <div class="inputBox">
+                <input type="email" name="email" required>
+                <span>ایمیل</span>
+                <i class="i-tag"></i>
+            </div>
+            <div class="inputBox">
+                <input type="number" name="password" required>
+                <span>رمز</span>
+                <i class="i-tag"></i>
+            </div>
+            <div class="links">
+                <a href="/login">ورود</a>
+            </div><br>
+            <center>
+                <input type="submit" value="ثبت نام">
+            </center>
+        </form>
+    </div>
+</div>
+
+
+<!--<div class="col-md-4 col-1 col-lg-4 col-sm-2"></div>-->
+
+
+{% endblock %}
